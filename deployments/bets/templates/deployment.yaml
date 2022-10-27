@@ -3,14 +3,16 @@ kind: Deployment
 metadata:
   name: {{ include "bets.fullname" . }}
   labels:
-    {{- include "bets.labels" . | nindent 4 }}
+    app: {{ include "bets.name" . }}
+    # {{- include "bets.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "bets.selectorLabels" . | nindent 6 }}
+      app: {{ include "bets.name" . }}
+      # {{- include "bets.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -18,7 +20,12 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "bets.selectorLabels" . | nindent 8 }}
+        app: {{ include "bets.name" . }}
+        version: v1
+        stack: echo
+        interface: rest
+        language: golang
+        # {{- include "bets.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
