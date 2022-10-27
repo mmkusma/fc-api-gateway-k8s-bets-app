@@ -1,10 +1,10 @@
 {{- if .Values.autoscaling.enabled }}
-apiVersion: autoscaling/v2beta1
+apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   name: {{ include "bets.fullname" . }}
   labels:
-    {{- include "bets.labels" . | nindent 4 }}
+    app: {{ include "bets.name" . }}
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
