@@ -4,7 +4,6 @@ metadata:
   name: {{ include "bets.fullname" . }}
   labels:
     app: {{ include "bets.name" . }}
-    # {{- include "bets.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
@@ -12,7 +11,6 @@ spec:
   selector:
     matchLabels:
       app: {{ include "bets.name" . }}
-      # {{- include "bets.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -25,7 +23,6 @@ spec:
         stack: echo
         interface: rest
         language: golang
-        # {{- include "bets.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
